@@ -12,7 +12,7 @@ import java.net.URL;
  * @author Frank Cusmano
  */
 public class IOUtils {
-    private static final String FREE_DAYS = "http://10.0.2.2/freepark/freedays.php";
+
 
     /**
      * Upload the specified file to the PHP server.
@@ -22,7 +22,7 @@ public class IOUtils {
      */
     public static boolean uploadGson(String data) {
         try {
-            final URL url = new URL(FREE_DAYS);
+            final URL url = new URL(Defines.LOCAL);
             HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
             httpCon.setDoOutput(true);
             httpCon.setDoInput(true);
