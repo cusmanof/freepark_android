@@ -3,11 +3,11 @@ package au.com.fc.models;
 import java.io.IOException;
 
 /**
+ * the unusual structure in the implementing classes are so it makes it easier for gson.
+ *
  * @author Frank Cusmano
  */
 public interface IModel {
-
-    void save() throws IOException;
     String getGson();
     IModel setGson(String ins);
 }

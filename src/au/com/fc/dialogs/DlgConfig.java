@@ -83,7 +83,8 @@ public class DlgConfig implements IDialog {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     dialogs.getContext().startActivity(intent);
                 } catch (IOException e) {
-                    Toast.makeText(dialogs.getContext(), " Error saving the data " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(dialogs.getContext(), "Error saving the data " + e.getMessage(),
+                            Toast.LENGTH_LONG).show();
                 }
             }
 

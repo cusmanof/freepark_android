@@ -1,8 +1,10 @@
 package au.com.fc.dialogs;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.widget.EditText;
 
 import java.util.List;
@@ -141,6 +143,7 @@ public class Dialogs {
      * @param msg             the message
      * @param dismissListener the listener.
      */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void showMessage(String msg, DialogInterface.OnDismissListener dismissListener) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 

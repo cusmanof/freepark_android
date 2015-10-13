@@ -7,8 +7,13 @@
   <string name="day_name_format">EEE</string>
   <string name="invalid_date">Date must be between %1$s and %2$s.</string>
   <string name="month_name_format">MMMM yyyy</string>
-  <string name="select_free">Select days when car park is free</string>
+  <string name="select_free">Select days when car bay is free</string>
   <string name="update">Update Free Days</string>
   <string name="about">About</string>
   <string name="getting_pls_wait">Retrieving data. Please wait.</string>
+  <string name="reset">Reset Configuration</string>
+  <string name="try_again">Cannot retrieve free dates. Try again in later.</string>
+  <string name="reserved_by">"Bay reserved by "</string>
+  <string name="refresh_dates">Refresh dates</string>
+  <string name="bay_reserved">"Bay reserved "</string>
 </resources>

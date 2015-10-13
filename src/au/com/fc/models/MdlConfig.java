@@ -27,7 +27,6 @@ public class MdlConfig implements IModel {
     }
 
 
-    @Override
     public void save() throws IOException {
         File fil = new File(Defines.downDir, Defines.FP_CONF);
         FileWriter fOut = new FileWriter(fil);
