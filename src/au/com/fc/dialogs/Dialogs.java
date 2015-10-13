@@ -134,7 +134,14 @@ public class Dialogs {
         alertDialog.show();
     }
 
-    public void showMessage(String msg) {
+
+    /**
+     * message with dismiss listener
+     *
+     * @param msg             the message
+     * @param dismissListener the listener.
+     */
+    public void showMessage(String msg, DialogInterface.OnDismissListener dismissListener) {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
 
         alertDialog.setIcon(android.R.drawable.ic_dialog_info);
@@ -151,9 +158,20 @@ public class Dialogs {
                 dialog.cancel();
             }
         });
-
+        if (dismissListener != null) {
+            alertDialog.setOnDismissListener(dismissListener);
+        }
         // Showing Alert Message
         alertDialog.show();
+    }
+
+    /**
+     * show message.
+     *
+     * @param msg the message.
+     */
+    public void showMessage(String msg) {
+        showMessage(msg, null);
     }
 
     public static boolean isFilenameValid(String filename) {

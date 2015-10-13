@@ -41,6 +41,12 @@ public class MdlConfig implements IModel {
         return gson.toJson(this);
 
     }
+    @Override
+    public IModel setGson(String ins) {
+        Gson gson = new Gson();
+        return gson.fromJson(ins, MdlConfig.class);
+
+    }
 
     public static MdlConfig load() {
         Gson gson = new Gson();

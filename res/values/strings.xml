@@ -10,4 +10,5 @@
   <string name="select_free">Select days when car park is free</string>
   <string name="update">Update Free Days</string>
   <string name="about">About</string>
+  <string name="getting_pls_wait">Retrieving data. Please wait.</string>
 </resources>

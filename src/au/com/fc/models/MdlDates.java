@@ -2,25 +2,25 @@ package au.com.fc.models;
 
 import au.com.fc.utils.Defines;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.*;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Frank Cusmano
  */
-public class MdlDates implements IModel {
-
+public class MdlDates implements IModel, Serializable{
+    private List<Date> dates ;
+    private String cmd;
     private String parkId;
     private String name;
-    private List<Date> dates;
 
-    public MdlDates(String parkId, String name, List<Date> freeDates) {
+    public MdlDates(String cmd, String name , String parkId, List<Date> freeDates) {
+        this.cmd = cmd;
         this.parkId = parkId;
         this.name = name;
-        dates = freeDates;
+        this.dates = freeDates;
     }
 
 
@@ -34,12 +34,19 @@ public class MdlDates implements IModel {
 
     @Override
     public String getGson() {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         return gson.toJson(this);
     }
 
+    @Override
+    public IModel setGson(String ins) {
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        return gson.fromJson(ins, MdlDates.class);
+    }
+
+
     public static MdlDates load() {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         File fil = new File(Defines.downDir, Defines.FP_DATES);
         try {
             return gson.fromJson(new FileReader(fil), MdlDates.class);
@@ -50,6 +57,6 @@ public class MdlDates implements IModel {
 
 
     public Collection<Date> getFreeDates() {
-        return dates;
+        return dates ;
     }
 }

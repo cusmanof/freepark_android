@@ -30,6 +30,7 @@ public class Main extends Activity {
     private MdlConfig config;
     private Date dStart;
     private Date dEnd;
+    private IOUtils ioUtils;
 
     /**
      * Called when the activity is first created.
@@ -53,22 +54,39 @@ public class Main extends Activity {
         dEnd = cc.getTime();
         calendar = (CalendarPickerView) findViewById(R.id.calendar_view);
         calendar.init(dStart, dEnd).inMode(CalendarPickerView.SelectionMode.MULTIPLE);
+        ioUtils = new IOUtils(this);
 
         if (!MdlConfig.isConfigured()) {
             dialogs.showYesNo(new DlgConfig(this), getString(R.string.r_u_owner));
         } else {
 
-
             config = MdlConfig.load();
             if (config != null) {
+                final String name = config.getName();
+                final String parkId = config.getParkId();
                 if (config.isOwner()) {
-                    label.setText(getString(R.string.select_free));
                     btnUpdate = new Button(this);
                     btnUpdate.setText(getString(R.string.update));
+                    label.setText(getString(R.string.getting_pls_wait));
+                    btnUpdate.setEnabled(false);
+                    if (!ioUtils.getDatesFree(name, parkId, calendar) ) {
+                        dialogs.showMessage("Cannot retrieve free dates. Try again in later.", new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialog) {
+                                System.exit(1);
+                            }
+                        });
+
+                    }
+                    btnUpdate.setEnabled(true);
+                    label.setText(getString(R.string.select_free));
+
                     btnUpdate.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            sendDatesFree();
+                            btnUpdate.setEnabled(false);
+                            ioUtils.sendDatesFree(name, parkId, calendar);
+                            btnUpdate.setEnabled(true);
                         }
                     });
                     LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
@@ -87,23 +105,6 @@ public class Main extends Activity {
         }
     }
 
-    private void sendDatesFree() {
-        btnUpdate.setEnabled(false);
-        List<Date> freeDates = calendar.getSelectedDates();
-        MdlDates dts = new MdlDates(config.getParkId(), config.getName(), freeDates);
-        try {
-            dts.save();
-        } catch (IOException e) {
-            Toast.makeText(this, " Error saving the data " + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-
-        //send out to server.
-        if (!IOUtils.uploadGson(dts.getGson())) {
-            Toast.makeText(this, " Error send data to the server. Try again later. ", Toast.LENGTH_LONG).show();
-        }
-        btnUpdate.setEnabled(true);
-
-    }
 
 
     // Initiating Menu XML file (menu.xml)
@@ -131,5 +132,4 @@ public class Main extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 }
