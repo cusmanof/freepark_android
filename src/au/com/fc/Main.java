@@ -110,12 +110,12 @@ public class Main extends Activity {
                                         public void aYes() {
                                             ioUtils.release(lastDate);
                                             updateReservedDays();
-                                            lastDate=null;
+                                            lastDate = null;
                                         }
 
                                         @Override
                                         public void aNo() {
-                                          lastDate=null;
+                                            lastDate = null;
                                         }
                                     }, "Do you want to release this date?");
                                 }
@@ -242,6 +242,15 @@ public class Main extends Activity {
                     }
                 }, "Reset the configuration, ARE YOU SURE?");
                 return true;
+            case R.id.refresh:
+                if (config != null) {
+                    if (config.isOwner()) {
+                        doOwner();
+                    } else {
+                        doUser();
+                    }
+                }
+                return true;
             default:
                 break;
         }
@@ -255,6 +264,7 @@ public class Main extends Activity {
                 .withSelectedDates(ioUtils.getFreeDates());
         calendar.highlightDates(ioUtils.getUnFreeDates());
     }
+
     private void updateReservedDays() {
         calendar.init(dStart, dEnd) //
                 .inMode(CalendarPickerView.SelectionMode.MULTIPLE)

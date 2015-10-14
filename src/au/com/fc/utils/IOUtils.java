@@ -2,6 +2,7 @@ package au.com.fc.utils;
 
 import android.widget.Toast;
 import au.com.fc.Main;
+import au.com.fc.R;
 import au.com.fc.models.MdlAll;
 import au.com.fc.models.MdlDates;
 import au.com.fc.models.MdlRelease;
@@ -182,7 +183,9 @@ public class IOUtils {
         MdlDates dts = new MdlDates("put", name, parkId, freeDates);
         //send out to server.
         if (!uploadGson(dts)) {
-            Toast.makeText(main, " Error send data to the server. Try again later. ", Toast.LENGTH_LONG).show();
+            Toast.makeText(main, main.getString(R.string.error_sending), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(main, "Dates Updated.", Toast.LENGTH_LONG).show();
         }
     }
 

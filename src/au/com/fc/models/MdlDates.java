@@ -46,6 +46,7 @@ public class MdlDates implements IModel, Serializable {
     public IModel setGson(String ins) {
         Gson gson = new GsonBuilder().setDateFormat(Defines.DATE_FORMAT).create();
         return gson.fromJson(ins, MdlDates.class);
+
     }
 
     public List<Date> getDates() {

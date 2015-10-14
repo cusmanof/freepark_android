@@ -8,4 +8,8 @@
           android:title="@string/reset"
           android:orderInCategory="1"
             />
+    <item android:id="@+id/refresh"
+          android:title="@string/reload_dates"
+          android:orderInCategory="2"
+            />
 </menu>

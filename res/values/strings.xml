@@ -3,7 +3,7 @@
 
 <resources>
   <string name="app_name">Free park</string>
-  <string name="r_u_owner">Are you a car park owner?</string>
+  <string name="r_u_owner">Are you a car bay owner?</string>
   <string name="day_name_format">EEE</string>
   <string name="invalid_date">Date must be between %1$s and %2$s.</string>
   <string name="month_name_format">MMMM yyyy</string>
@@ -16,4 +16,6 @@
   <string name="reserved_by">"Bay reserved by "</string>
   <string name="refresh_dates">Refresh dates</string>
   <string name="bay_reserved">"Bay reserved "</string>
+  <string name="error_sending">"Error sending data to the server. Try again later. "</string>
+  <string name="reload_dates">Reload dates</string>
 </resources>
