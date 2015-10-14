@@ -9,6 +9,7 @@ import au.com.fc.models.MdlReserve;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -40,24 +41,21 @@ public class IOUtils {
         this.calendar = calendar;
     }
 
-    public void sendDatesFree() {
-        List<Date> freeDates = calendar.getSelectedDates();
-        MdlDates dts = new MdlDates("put", name, parkId, freeDates);
-        //send out to server.
-        if (!uploadGson(dts)) {
-            Toast.makeText(main, " Error send data to the server. Try again later. ", Toast.LENGTH_LONG).show();
-        }
+
+    private static HttpURLConnection getHttpURLConnection() throws IOException {
+        final URL url = new URL(Defines.FP_HOST);
+        HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+        httpCon.setDoOutput(true);
+        httpCon.setDoInput(true);
+        httpCon.setConnectTimeout(5000);
+        httpCon.setRequestMethod("PUT");
+        return httpCon;
     }
 
     public boolean loadDatesFree() {
         try {
             MdlDates dts = new MdlDates("get", name, parkId, null);
-            final URL url = new URL(Defines.LOCAL);
-            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setDoOutput(true);
-            httpCon.setDoInput(true);
-            httpCon.setConnectTimeout(5000);
-            httpCon.setRequestMethod("PUT");
+            HttpURLConnection httpCon = getHttpURLConnection();
 
             OutputStreamWriter out = new OutputStreamWriter(
                     httpCon.getOutputStream());
@@ -81,12 +79,7 @@ public class IOUtils {
     public boolean loadUnreserved() {
         try {
             MdlAll all = new MdlAll();
-            final URL url = new URL(Defines.LOCAL);
-            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setDoOutput(true);
-            httpCon.setDoInput(true);
-            httpCon.setConnectTimeout(5000);
-            httpCon.setRequestMethod("PUT");
+            HttpURLConnection httpCon = getHttpURLConnection();
 
             OutputStreamWriter out = new OutputStreamWriter(
                     httpCon.getOutputStream());
@@ -107,6 +100,7 @@ public class IOUtils {
         return false;
     }
 
+
     /**
      * Upload the specified data to the PHP server.
      *
@@ -114,12 +108,7 @@ public class IOUtils {
      */
     public boolean uploadGson(MdlDates dts) {
         try {
-            final URL url = new URL(Defines.LOCAL);
-            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setDoOutput(true);
-            httpCon.setDoInput(true);
-            httpCon.setConnectTimeout(5000);
-            httpCon.setRequestMethod("PUT");
+            HttpURLConnection httpCon = getHttpURLConnection();
 
             OutputStreamWriter out = new OutputStreamWriter(
                     httpCon.getOutputStream());
@@ -143,12 +132,7 @@ public class IOUtils {
     public boolean release(Date date) {
         MdlRelease rel = new MdlRelease(date, name);
         try {
-            final URL url = new URL(Defines.LOCAL);
-            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setDoOutput(true);
-            httpCon.setDoInput(true);
-            httpCon.setConnectTimeout(5000);
-            httpCon.setRequestMethod("PUT");
+            HttpURLConnection httpCon = getHttpURLConnection();
 
             OutputStreamWriter out = new OutputStreamWriter(
                     httpCon.getOutputStream());
@@ -172,12 +156,7 @@ public class IOUtils {
     public boolean reserveForMe (Date date) {
         MdlReserve rel = new MdlReserve(date, name);
         try {
-            final URL url = new URL(Defines.LOCAL);
-            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setDoOutput(true);
-            httpCon.setDoInput(true);
-            httpCon.setConnectTimeout(5000);
-            httpCon.setRequestMethod("PUT");
+            HttpURLConnection httpCon = getHttpURLConnection();
 
             OutputStreamWriter out = new OutputStreamWriter(
                     httpCon.getOutputStream());
@@ -197,6 +176,16 @@ public class IOUtils {
         }
         return false;
     }
+
+    public void sendDatesFree() {
+        List<Date> freeDates = calendar.getSelectedDates();
+        MdlDates dts = new MdlDates("put", name, parkId, freeDates);
+        //send out to server.
+        if (!uploadGson(dts)) {
+            Toast.makeText(main, " Error send data to the server. Try again later. ", Toast.LENGTH_LONG).show();
+        }
+    }
+
     public boolean isReserved(Date date) {
         List<Date> dates = mdlDates.getDates();
         if (dates != null) {
