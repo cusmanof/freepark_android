@@ -18,10 +18,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e49a8eee-841a-4198-9782-9d60b4adffc2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.apk" afterPath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.unaligned.apk" afterPath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.unaligned.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/au/com/fc/utils/Defines.java" afterPath="$PROJECT_DIR$/src/au/com/fc/utils/Defines.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/au/com/fc/utils/IOUtils.java" afterPath="$PROJECT_DIR$/src/au/com/fc/utils/IOUtils.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freepark_android.iws" afterPath="$PROJECT_DIR$/freepark_android.iws" />
     </list>
     <ignored path="freepark_android.iws" />
@@ -100,7 +96,7 @@
       <file leaf-file-name="IOUtils.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/au/com/fc/utils/IOUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33286119">
+            <state vertical-scroll-proportion="0.38714993">
               <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
               <folding>
                 <element signature="e#9361#9362#0" expanded="true" />
@@ -584,7 +580,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="2173" y="59" width="1307" height="1112" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -598,7 +594,7 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3237998" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="IvyIDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35137895" sideWeight="0.5" order="26" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35137895" sideWeight="0.5" order="26" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22213311" sideWeight="0.49405771" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="27" side_tool="true" content_ui="tabs" />
@@ -607,7 +603,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24979253" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25025538" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25025538" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -660,8 +656,14 @@
           <properties />
           <option name="timeStamp" value="39" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/au/com/fc/utils/IOUtils.java</url>
+          <line>73</line>
+          <properties />
+          <option name="timeStamp" value="40" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="40" />
+      <option name="time" value="41" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1117,7 +1119,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/au/com/fc/utils/IOUtils.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33286119">
+        <state vertical-scroll-proportion="0.38714993">
           <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
           <folding>
             <element signature="e#9361#9362#0" expanded="true" />
