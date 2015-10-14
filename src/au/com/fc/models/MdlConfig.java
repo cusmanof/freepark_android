@@ -22,8 +22,8 @@ public class MdlConfig implements IModel {
         this.parkId = parkId;
     }
 
-    public void setName(String user) {
-        this.name = user;
+    public void setName(String name) {
+        this.name = name;
     }
 
 

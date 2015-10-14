@@ -121,6 +121,11 @@ public class Main extends Activity {
                                 }
                                 lastDate = date;
                                 return true;
+                            } else {
+                                if (ioUtils.canReserve(date)) {
+                                    ioUtils.reserveForMe(date);
+                                    updateReservedDays();
+                                }
                             }
                             lastDate = null;
                             return true;
@@ -254,7 +259,7 @@ public class Main extends Activity {
         calendar.init(dStart, dEnd) //
                 .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
                 .withSelectedDates(ioUtils.getUnreservedDates());
-        calendar.highlightDates(ioUtils.getReservedbyMe());
+        calendar.highlightDates(ioUtils.getReservedByMe());
     }
 
 }

@@ -11,12 +11,12 @@ import java.util.List;
 /**
  * @author Frank Cusmano
  */
-public class MdlRelease implements IModel {
-    private String cmd = "rel";
-    private final  Date date;
-    private final String userId;
+public class MdlReserve implements IModel {
+    private String cmd = "res";
+    private String userId;
+    private Date date;
 
-    public MdlRelease(Date date, String userId) {
+    public MdlReserve(Date date, String userId) {
         this.date = date;
         this.userId = userId;
     }
@@ -31,6 +31,7 @@ public class MdlRelease implements IModel {
     @Override
     public IModel setGson(String ins) {
         Gson gson = new GsonBuilder().setDateFormat(Defines.DATE_FORMAT).create();
-        return gson.fromJson(ins, MdlRelease.class);
+        return gson.fromJson(ins, MdlReserve.class);
     }
+
 }

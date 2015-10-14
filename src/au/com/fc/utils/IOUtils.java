@@ -5,6 +5,7 @@ import au.com.fc.Main;
 import au.com.fc.models.MdlAll;
 import au.com.fc.models.MdlDates;
 import au.com.fc.models.MdlRelease;
+import au.com.fc.models.MdlReserve;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.io.BufferedReader;
@@ -109,7 +110,7 @@ public class IOUtils {
     /**
      * Upload the specified data to the PHP server.
      *
-     * @param dts
+     * @param dts .
      */
     public boolean uploadGson(MdlDates dts) {
         try {
@@ -139,7 +140,63 @@ public class IOUtils {
         return false;
     }
 
+    public boolean release(Date date) {
+        MdlRelease rel = new MdlRelease(date, name);
+        try {
+            final URL url = new URL(Defines.LOCAL);
+            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+            httpCon.setDoOutput(true);
+            httpCon.setDoInput(true);
+            httpCon.setConnectTimeout(5000);
+            httpCon.setRequestMethod("PUT");
 
+            OutputStreamWriter out = new OutputStreamWriter(
+                    httpCon.getOutputStream());
+            out.write(rel.getGson());
+            out.close();
+            BufferedReader ins = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
+            StringBuilder buf = new StringBuilder();
+            String line;
+            while ((line = ins.readLine()) != null) {
+                buf.append(line);
+            }
+            mdlAll = (MdlAll) new MdlAll().setGson(buf.toString());
+            return true;
+        } catch (Exception e) {
+            //drop thru
+            System.out.println("e = " + e);
+        }
+        return false;
+    }
+
+    public boolean reserveForMe (Date date) {
+        MdlReserve rel = new MdlReserve(date, name);
+        try {
+            final URL url = new URL(Defines.LOCAL);
+            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
+            httpCon.setDoOutput(true);
+            httpCon.setDoInput(true);
+            httpCon.setConnectTimeout(5000);
+            httpCon.setRequestMethod("PUT");
+
+            OutputStreamWriter out = new OutputStreamWriter(
+                    httpCon.getOutputStream());
+            out.write(rel.getGson());
+            out.close();
+            BufferedReader ins = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
+            StringBuilder buf = new StringBuilder();
+            String line;
+            while ((line = ins.readLine()) != null) {
+                buf.append(line);
+            }
+            mdlAll = (MdlAll) new MdlAll().setGson(buf.toString());
+            return true;
+        } catch (Exception e) {
+            //drop thru
+            System.out.println("e = " + e);
+        }
+        return false;
+    }
     public boolean isReserved(Date date) {
         List<Date> dates = mdlDates.getDates();
         if (dates != null) {
@@ -188,20 +245,20 @@ public class IOUtils {
     }
 
     public Collection<Date> getUnreservedDates() {
-        Collection<Date> cannotUse = getReservedbyMe();
+        Collection<Date> cannotUse = getReservedByMe();
         HashSet<Date> ret = new HashSet<>();
         List<Date> dates = mdlAll.getDates();
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
                 Date d = dates.get(i);
-                if (mdlAll.getUsed().get(i) == null &&  !cannotUse.contains(d))
+                if (mdlAll.getUsed().get(i) == null && !cannotUse.contains(d))
                     ret.add(d);
             }
         }
         return ret;
     }
 
-    public Collection<Date> getReservedbyMe() {
+    public Collection<Date> getReservedByMe() {
         List<Date> ret = new LinkedList<>();
         List<String> used = mdlAll.getUsed();
         if (used != null) {
@@ -213,12 +270,13 @@ public class IOUtils {
         }
         return ret;
     }
+
     public boolean isReservedByMe(Date date) {
         List<Date> dates = mdlAll.getDates();
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
                 if (dates.get(i).equals(date)) {
-                    if( name.equals(mdlAll.getUsed().get(i))) {
+                    if (name.equals(mdlAll.getUsed().get(i))) {
                         return true;
                     }
                 }
@@ -232,8 +290,8 @@ public class IOUtils {
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
                 if (dates.get(i).equals(date)) {
-                    if( name.equals(mdlAll.getUsed().get(i))) {
-                        return mdlAll.getParkId().get(i)+ " : " + mdlAll.getOwner().get(i);
+                    if (name.equals(mdlAll.getUsed().get(i))) {
+                        return mdlAll.getParkId().get(i) + " : " + mdlAll.getOwner().get(i);
                     }
                 }
             }
@@ -242,32 +300,7 @@ public class IOUtils {
     }
 
 
-    public boolean release(Date date) {
-        MdlRelease rel = new MdlRelease(date, name);
-        try {
-            final URL url = new URL(Defines.LOCAL);
-            HttpURLConnection httpCon = (HttpURLConnection) url.openConnection();
-            httpCon.setDoOutput(true);
-            httpCon.setDoInput(true);
-            httpCon.setConnectTimeout(5000);
-            httpCon.setRequestMethod("PUT");
-
-            OutputStreamWriter out = new OutputStreamWriter(
-                    httpCon.getOutputStream());
-            out.write(rel.getGson());
-            out.close();
-            BufferedReader ins = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
-            StringBuilder buf = new StringBuilder();
-            String line;
-            while ((line = ins.readLine()) != null) {
-                buf.append(line);
-            }
-            mdlAll = (MdlAll) new MdlAll().setGson(buf.toString());
-            return true;
-        } catch (Exception e) {
-            //drop thru
-            System.out.println("e = " + e);
-        }
-        return false;
+    public boolean canReserve(Date date) {
+        return getUnreservedDates().contains(date);
     }
 }

@@ -1,5 +1,6 @@
 package au.com.fc.models;
 
+import au.com.fc.utils.Defines;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -37,13 +38,13 @@ public class MdlDates implements IModel, Serializable {
 
     @Override
     public String getGson() {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Gson gson = new GsonBuilder().setDateFormat(Defines.DATE_FORMAT).create();
         return gson.toJson(this);
     }
 
     @Override
     public IModel setGson(String ins) {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Gson gson = new GsonBuilder().setDateFormat(Defines.DATE_FORMAT).create();
         return gson.fromJson(ins, MdlDates.class);
     }
 

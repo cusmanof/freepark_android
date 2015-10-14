@@ -23,13 +23,13 @@ public class MdlAll implements IModel {
 
     @Override
     public String getGson() {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Gson gson = new GsonBuilder().setDateFormat(Defines.DATE_FORMAT).create();
         return gson.toJson(this);
     }
 
     @Override
     public IModel setGson(String ins) {
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Gson gson = new GsonBuilder().setDateFormat(Defines.DATE_FORMAT).create();
         return gson.fromJson(ins, MdlAll.class);
     }
 
