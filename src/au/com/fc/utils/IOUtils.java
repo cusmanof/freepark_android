@@ -179,14 +179,11 @@ public class IOUtils {
     }
 
     public void sendDatesFree() {
+        //do in background.
         List<Date> freeDates = calendar.getSelectedDates();
         MdlDates dts = new MdlDates("put", name, parkId, freeDates);
         //send out to server.
-        if (!uploadGson(dts)) {
-            Toast.makeText(main, main.getString(R.string.error_sending), Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(main, "Dates Updated.", Toast.LENGTH_LONG).show();
-        }
+        uploadGson(dts);
     }
 
     public boolean isReserved(Date date) {

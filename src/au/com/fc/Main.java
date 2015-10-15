@@ -66,9 +66,7 @@ public class Main extends Activity {
             config = MdlConfig.load();
             if (config != null) {
                 btnUpdate = new Button(this);
-                LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                ll.addView(btnUpdate, lp);
+
                 final String name = config.getName();
                 final String parkId = config.getParkId();
                 ioUtils = new IOUtils(this, name, parkId, calendar);
@@ -80,14 +78,26 @@ public class Main extends Activity {
                                 Toast.makeText(dialogs.getContext(), getString(R.string.reserved_by) + ioUtils.getReservedName(date),
                                         Toast.LENGTH_LONG).show();
                                 return true;
-                            } else {
-
                             }
                             return false;
                         }
                     });
+                    calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
+                        @Override
+                        public void onDateSelected(Date date) {
+                            ioUtils.sendDatesFree();
+                        }
+
+                        @Override
+                        public void onDateUnselected(Date date) {
+                            ioUtils.sendDatesFree();
+                        }
+                    });
                     doOwner();
                 } else {
+                    LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    ll.addView(btnUpdate, lp);
                     calendar.setCellClickInterceptor(new CalendarPickerView.CellClickInterceptor() {
                         @Override
                         public boolean onCellClicked(Date date) {
@@ -117,7 +127,7 @@ public class Main extends Activity {
                                         public void aNo() {
                                             lastDate = null;
                                         }
-                                    }, "Do you want to release this date?");
+                                    }, getString(R.string.release));
                                 }
                                 lastDate = date;
                                 return true;
@@ -164,10 +174,6 @@ public class Main extends Activity {
 
     private void doOwner() {
 
-        btnUpdate.setText(getString(R.string.update));
-        label.setText(getString(R.string.getting_pls_wait));
-        //load initial dates
-        btnUpdate.setEnabled(false);
         if (!ioUtils.loadDatesFree()) {
             dialogs.showMessage(getString(R.string.try_again), new DialogInterface.OnDismissListener() {
                 @Override
@@ -175,20 +181,8 @@ public class Main extends Activity {
                     System.exit(1);
                 }
             });
-
         }
-        btnUpdate.setEnabled(true);
         label.setText(getString(R.string.select_free));
-
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btnUpdate.setEnabled(false);
-                ioUtils.sendDatesFree();
-                updateFreeDays();
-                btnUpdate.setEnabled(true);
-            }
-        });
         updateFreeDays();
     }
 
@@ -210,7 +204,7 @@ public class Main extends Activity {
 
         switch (item.getItemId()) {
             case R.id.about:
-                dialogs.showMessage("Free Park\nCopyright Frank Cusmano\nfrankcusmano@hotmail.com");
+                dialogs.showMessage(getString(R.string.me));
                 return true;
             case R.id.reset:
                 dialogs.showYesNo(new IDialog() {
@@ -240,7 +234,7 @@ public class Main extends Activity {
                     public void aNo() {
 
                     }
-                }, "Reset the configuration, ARE YOU SURE?");
+                }, getString(R.string.reset_config));
                 return true;
             case R.id.refresh:
                 if (config != null) {
