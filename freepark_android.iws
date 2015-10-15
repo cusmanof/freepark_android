@@ -17,19 +17,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: au.com.fc" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e49a8eee-841a-4198-9782-9d60b4adffc2" name="Default" comment="">
-      <change type="DELETED" beforePath="M:\adi_vsfz\projects\android\freepark_android\out\production\FreePark\FreePark.apk" afterPath="" />
-      <change type="DELETED" beforePath="M:\adi_vsfz\projects\android\freepark_android\out\production\FreePark\FreePark.unaligned.apk" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.apk" afterPath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.unaligned.apk" afterPath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.unaligned.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/au/com/fc/utils/Defines.java" afterPath="$PROJECT_DIR$/src/au/com/fc/utils/Defines.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/au/com/fc/utils/IOUtils.java" afterPath="$PROJECT_DIR$/src/au/com/fc/utils/IOUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/au/com/fc/Main.java" afterPath="$PROJECT_DIR$/src/au/com/fc/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/au/com/fc/models/MdlDates.java" afterPath="$PROJECT_DIR$/src/au/com/fc/models/MdlDates.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freepark_android.iws" afterPath="$PROJECT_DIR$/freepark_android.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/menu/main.xml" afterPath="$PROJECT_DIR$/res/menu/main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
-    </list>
+    <list default="true" id="e49a8eee-841a-4198-9782-9d60b4adffc2" name="Default" comment="" />
     <ignored path="freepark_android.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -635,7 +623,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="2173" y="59" width="1307" height="1112" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
