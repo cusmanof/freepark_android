@@ -20,14 +20,7 @@
     <list default="true" id="e49a8eee-841a-4198-9782-9d60b4adffc2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.apk" afterPath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.unaligned.apk" afterPath="$PROJECT_DIR$/out/production/freepark_android/freepark_android.unaligned.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gen/au/com/fc/BuildConfig.java" afterPath="$PROJECT_DIR$/gen/au/com/fc/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/au/com/fc/dialogs/DlgConfig.java" afterPath="$PROJECT_DIR$/src/au/com/fc/dialogs/DlgConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/au/com/fc/utils/IOUtils.java" afterPath="$PROJECT_DIR$/src/au/com/fc/utils/IOUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/au/com/fc/Main.java" afterPath="$PROJECT_DIR$/src/au/com/fc/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freepark_android.iml" afterPath="$PROJECT_DIR$/freepark_android.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freepark_android.ipr" afterPath="$PROJECT_DIR$/freepark_android.ipr" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/freepark_android.iws" afterPath="$PROJECT_DIR$/freepark_android.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/strings.xml" afterPath="$PROJECT_DIR$/res/values/strings.xml" />
     </list>
     <ignored path="freepark_android.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -626,6 +619,13 @@
       <option name="number" value="Default" />
       <updated>1444368677376</updated>
     </task>
+    <task id="LOCAL-00001" summary="auto send owner dates">
+      <created>1444920291210</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1444920291210</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TodoView">
@@ -705,6 +705,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="auto send owner dates" />
+    <option name="LAST_COMMIT_MESSAGE" value="auto send owner dates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
