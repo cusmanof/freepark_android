@@ -18,4 +18,10 @@
   <string name="bay_reserved">"Bay reserved "</string>
   <string name="error_sending">"Error sending data to the server. Try again later. "</string>
   <string name="reload_dates">Reload dates</string>
+  <string name="release">Do you want to release this date?</string>
+  <string name="me">Free Park\nCopyright Frank Cusmano\nfrankcusmano@hotmail.com</string>
+  <string name="reset_config">Reset the configuration, ARE YOU SURE?</string>
+  <string name="bay_id">Enter your Car bay ID</string>
+  <string name="enter_name">Enter your name</string>
+  <string name="error_saving">"Error saving the data "</string>
 </resources>

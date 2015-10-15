@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 import au.com.fc.Main;
+import au.com.fc.R;
 import au.com.fc.models.MdlConfig;
 
 import java.io.IOException;
@@ -53,7 +54,7 @@ public class DlgConfig implements IDialog {
             public void aNo() {
                 //ignore
             }
-        }, "Enter your Car park ID", cpName);
+        }, dialogs.getContext().getString(R.string.bay_id), cpName);
     }
 
     @Override
@@ -83,7 +84,7 @@ public class DlgConfig implements IDialog {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     dialogs.getContext().startActivity(intent);
                 } catch (IOException e) {
-                    Toast.makeText(dialogs.getContext(), "Error saving the data " + e.getMessage(),
+                    Toast.makeText(dialogs.getContext(), dialogs.getContext().getString(R.string.error_saving) + e.getMessage(),
                             Toast.LENGTH_LONG).show();
                 }
             }
@@ -91,6 +92,6 @@ public class DlgConfig implements IDialog {
             public void aNo() {
                 //ignore
             }
-        }, "Enter your name", usName);
+        }, dialogs.getContext().getString(R.string.enter_name), usName);
     }
 }
