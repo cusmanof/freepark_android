@@ -19,11 +19,12 @@ import au.com.fc.dialogs.IDialog;
 import au.com.fc.models.MdlConfig;
 import au.com.fc.utils.Defines;
 import au.com.fc.utils.IOUtils;
+import au.com.fc.utils.RequestedDecorator;
+import com.squareup.timessquare.CalendarCellDecorator;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.io.File;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 public class Main extends Activity {
     private Dialogs dialogs;
@@ -34,7 +35,7 @@ public class Main extends Activity {
     private Date dStart;
     private Date dEnd;
     private IOUtils ioUtils;
-    private Date lastDate;
+
 
     /**
      * Called when the activity is first created.
@@ -48,7 +49,6 @@ public class Main extends Activity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
         label = (TextView) findViewById(R.id.label);
         dialogs = new Dialogs(this);
 
@@ -69,7 +69,7 @@ public class Main extends Activity {
 
                 final String name = config.getName();
                 final String parkId = config.getParkId();
-                ioUtils = new IOUtils(this, name, parkId, calendar);
+                ioUtils = new IOUtils(name, parkId, calendar);
                 if (config.isOwner()) {
                     calendar.setCellClickInterceptor(new CalendarPickerView.CellClickInterceptor() {
                         @Override
@@ -102,42 +102,16 @@ public class Main extends Activity {
                         @Override
                         public boolean onCellClicked(Date date) {
                             if (ioUtils.isReservedByMe(date)) {
-                                Toast.makeText(dialogs.getContext(), getString(R.string.bay_reserved) + ioUtils.getReservedBay(date),
-                                        Toast.LENGTH_SHORT).show();
-                                if (date.equals(lastDate)) {
-                                    dialogs.showYesNo(new IDialog() {
-                                        @Override
-                                        public void aSelection(String sel) {
-
-                                        }
-
-                                        @Override
-                                        public void aIndex(int sel) {
-
-                                        }
-
-                                        @Override
-                                        public void aYes() {
-                                            ioUtils.release(lastDate);
-                                            updateReservedDays();
-                                            lastDate = null;
-                                        }
-
-                                        @Override
-                                        public void aNo() {
-                                            lastDate = null;
-                                        }
-                                    }, getString(R.string.release));
-                                }
-                                lastDate = date;
-                                return true;
+                                ioUtils.release(date);
                             } else {
                                 if (ioUtils.canReserve(date)) {
                                     ioUtils.reserveForMe(date);
-                                    updateReservedDays();
+                                } else {
+                                    ioUtils.requestForMe(date);
                                 }
                             }
-                            lastDate = null;
+                            updateReservedDays();
+                            calendar.scrollToDate(date);
                             return true;
                         }
                     });
@@ -156,7 +130,7 @@ public class Main extends Activity {
     }
 
     private void doUser() {
-        label.setText("Click twice to release bay");
+        label.setText("User: " + ioUtils.getName());
         btnUpdate.setText(getString(R.string.refresh_dates));
         btnUpdate.setEnabled(false);
         if (!ioUtils.loadUnreserved()) {
@@ -173,7 +147,7 @@ public class Main extends Activity {
     }
 
     private void doOwner() {
-
+        label.setText("Owner : " + ioUtils.getName() + " bay : " + ioUtils.getParkId());
         if (!ioUtils.loadDatesFree()) {
             dialogs.showMessage(getString(R.string.try_again), new DialogInterface.OnDismissListener() {
                 @Override
@@ -260,6 +234,7 @@ public class Main extends Activity {
     }
 
     private void updateReservedDays() {
+        calendar.setDecorators(Arrays.<CalendarCellDecorator>asList(new RequestedDecorator(ioUtils)));
         calendar.init(dStart, dEnd) //
                 .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
                 .withSelectedDates(ioUtils.getUnreservedDates());

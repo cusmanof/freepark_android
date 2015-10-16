@@ -1,2 +1,5 @@
 *.class
 freepark_android.iws
+*.apk
+freepark_android.iws
+freepark_android.iml

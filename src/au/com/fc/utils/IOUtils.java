@@ -1,12 +1,7 @@
 package au.com.fc.utils;
 
-import android.widget.Toast;
-import au.com.fc.Main;
-import au.com.fc.R;
-import au.com.fc.models.MdlAll;
-import au.com.fc.models.MdlDates;
-import au.com.fc.models.MdlRelease;
-import au.com.fc.models.MdlReserve;
+import android.os.AsyncTask;
+import au.com.fc.models.*;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.io.BufferedReader;
@@ -23,20 +18,19 @@ import java.util.*;
 public class IOUtils {
 
 
-    private Main main;
     private final String name;
     private final String parkId;
     private final CalendarPickerView calendar;
-    MdlDates mdlDates = new MdlDates();
+    private MdlDates mdlDates = new MdlDates();
     private MdlAll mdlAll = new MdlAll();
+    private boolean moreToDo;
+    private boolean running;
+    private Object lock = new Object();
 
     /**
-     * Contructor
-     *
-     * @param main the context
+     * Constructor
      */
-    public IOUtils(Main main, String name, String parkId, CalendarPickerView calendar) {
-        this.main = main;
+    public IOUtils(String name, String parkId, CalendarPickerView calendar) {
         this.name = name;
         this.parkId = parkId;
         this.calendar = calendar;
@@ -154,7 +148,7 @@ public class IOUtils {
         return false;
     }
 
-    public boolean reserveForMe (Date date) {
+    public boolean reserveForMe(Date date) {
         MdlReserve rel = new MdlReserve(date, name);
         try {
             HttpURLConnection httpCon = getHttpURLConnection();
@@ -178,12 +172,28 @@ public class IOUtils {
         return false;
     }
 
-    public void sendDatesFree() {
-        //do in background.
-        List<Date> freeDates = calendar.getSelectedDates();
-        MdlDates dts = new MdlDates("put", name, parkId, freeDates);
-        //send out to server.
-        uploadGson(dts);
+    public boolean requestForMe(Date date) {
+        MdlRequest rel = new MdlRequest(date, name);
+        try {
+            HttpURLConnection httpCon = getHttpURLConnection();
+
+            OutputStreamWriter out = new OutputStreamWriter(
+                    httpCon.getOutputStream());
+            out.write(rel.getGson());
+            out.close();
+            BufferedReader ins = new BufferedReader(new InputStreamReader(httpCon.getInputStream()));
+            StringBuilder buf = new StringBuilder();
+            String line;
+            while ((line = ins.readLine()) != null) {
+                buf.append(line);
+            }
+            mdlAll = (MdlAll) new MdlAll().setGson(buf.toString());
+            return true;
+        } catch (Exception e) {
+            //drop thru
+            System.out.println("e = " + e);
+        }
+        return false;
     }
 
     public boolean isReserved(Date date) {
@@ -226,7 +236,7 @@ public class IOUtils {
         List<Date> dates = mdlDates.getDates();
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
-                if (mdlDates.getUsed().get(i) != null)
+                if (mdlDates.getDates().get(i).equals(date) && mdlDates.getUsed().get(i) != null)
                     return mdlDates.getUsed().get(i);
             }
         }
@@ -252,7 +262,7 @@ public class IOUtils {
         List<String> used = mdlAll.getUsed();
         if (used != null) {
             for (int i = 0; i < used.size(); i++) {
-                if (name.equals(mdlAll.getUsed().get(i))) {
+                if (name.equals(mdlAll.getUsed().get(i)) && mdlAll.getOwner().get(i) != null) {
                     ret.add(mdlAll.getDates().get(i));
                 }
             }
@@ -265,13 +275,31 @@ public class IOUtils {
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
                 if (dates.get(i).equals(date)) {
-                    if (name.equals(mdlAll.getUsed().get(i))) {
+                    if (name.equals(mdlAll.getUsed().get(i)) &&  mdlAll.getOwner().get(i) != null) {
                         return true;
                     }
                 }
             }
         }
         return false;
+    }
+
+    public String getMyParkId(Date date) {
+        List<Date> dates = mdlAll.getDates();
+        if (dates != null) {
+            for (int i = 0; i < dates.size(); i++) {
+                if (dates.get(i).equals(date)) {
+                    if (name.equals(mdlAll.getUsed().get(i))) {
+                        String p = mdlAll.getParkId().get(i);
+                        if (p == null || p.isEmpty()) {
+                            return "REQ";
+                        }
+                        return p;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public String getReservedBay(Date date) {
@@ -291,5 +319,59 @@ public class IOUtils {
 
     public boolean canReserve(Date date) {
         return getUnreservedDates().contains(date);
+    }
+
+
+    /**
+     * background task to update free dates.
+     */
+    public void sendDatesFree() {
+        synchronized (lock) {
+            moreToDo = true;
+        }
+        if (!running) {
+            new BgSender().execute();
+        }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getParkId() {
+        return parkId;
+    }
+
+
+    private class BgSender extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            while (moreToDo) {
+                synchronized (lock) {
+                    moreToDo = false;
+                }
+                List<Date> freeDates = calendar.getSelectedDates();
+                MdlDates dts = new MdlDates("put", name, parkId, freeDates);
+                //send out to server.
+                uploadGson(dts);
+
+                //wait and see if more dates pressed.
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            running = false;
+        }
+
+
     }
 }
