@@ -20,6 +20,7 @@ import au.com.fc.models.MdlConfig;
 import au.com.fc.utils.Defines;
 import au.com.fc.utils.IOUtils;
 import au.com.fc.utils.RequestedDecorator;
+import au.com.fc.utils.UsedDecorator;
 import com.squareup.timessquare.CalendarCellDecorator;
 import com.squareup.timessquare.CalendarPickerView;
 
@@ -71,17 +72,6 @@ public class Main extends Activity {
                 final String parkId = config.getParkId();
                 ioUtils = new IOUtils(name, parkId, calendar);
                 if (config.isOwner()) {
-                    calendar.setCellClickInterceptor(new CalendarPickerView.CellClickInterceptor() {
-                        @Override
-                        public boolean onCellClicked(Date date) {
-                            if (ioUtils.isReserved(date)) {
-                                Toast.makeText(dialogs.getContext(), getString(R.string.reserved_by) + ioUtils.getReservedName(date),
-                                        Toast.LENGTH_LONG).show();
-                                return true;
-                            }
-                            return false;
-                        }
-                    });
                     calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
                         @Override
                         public void onDateSelected(Date date) {
@@ -156,7 +146,6 @@ public class Main extends Activity {
                 }
             });
         }
-        label.setText(getString(R.string.select_free));
         updateFreeDays();
     }
 
@@ -227,6 +216,7 @@ public class Main extends Activity {
 
 
     private void updateFreeDays() {
+        calendar.setDecorators(Arrays.<CalendarCellDecorator>asList(new UsedDecorator(ioUtils)));
         calendar.init(dStart, dEnd) //
                 .inMode(CalendarPickerView.SelectionMode.MULTIPLE)
                 .withSelectedDates(ioUtils.getFreeDates());
