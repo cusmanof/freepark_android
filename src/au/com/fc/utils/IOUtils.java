@@ -71,7 +71,7 @@ public class IOUtils {
         return false;
     }
 
-    public boolean loadUnreserved() {
+    public boolean loadAll() {
         try {
             MdlAll all = new MdlAll();
             HttpURLConnection httpCon = getHttpURLConnection();
@@ -196,16 +196,18 @@ public class IOUtils {
         return false;
     }
 
-    public boolean isReserved(Date date) {
-        List<Date> dates = mdlDates.getDates();
+    public List<Date> getRequested() {
+        loadAll();
+        List<Date> ret = new LinkedList<>();
+        List<Date> dates = mdlAll.getDates();
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
-                if (dates.get(i).equals(date)) {
-                    return !mdlDates.getUsed().get(i).isEmpty();
+                if (!mdlAll.getUsed().get(i).isEmpty() && mdlAll.getParkId().get(i).isEmpty()) {
+                    ret.add(dates.get(i));
                 }
             }
         }
-        return false;
+        return ret;
     }
 
     public Collection<Date> getFreeDates() {

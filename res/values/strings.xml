@@ -17,11 +17,17 @@
   <string name="refresh_dates">Refresh dates</string>
   <string name="bay_reserved">"Bay reserved "</string>
   <string name="error_sending">"Error sending data to the server. Try again later. "</string>
-  <string name="reload_dates">Reload dates</string>
+  <string name="help">Help</string>
   <string name="release">Do you want to release this date?</string>
   <string name="me">Free Park\nCopyright Frank Cusmano\nfrankcusmano@hotmail.com</string>
   <string name="reset_config">Reset the configuration, ARE YOU SURE?</string>
   <string name="bay_id">Enter your Car bay ID</string>
   <string name="enter_name">Enter your name</string>
   <string name="error_saving">"Error saving the data "</string>
+  <string name="help_owner">Press on a date to release/take back a parking bay.\n You cannot take back a bay that has
+    been allocated to a user.\n
+  </string>
+  <string name="help_user">Select a blue date to reserve that day.\nYou can request a day that is not free by pressing
+    on that date.\nIf that day becomes available, you will be allocated that bay.\n
+  </string>
 </resources>

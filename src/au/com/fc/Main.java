@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import au.com.fc.dialogs.Dialogs;
 import au.com.fc.dialogs.DlgConfig;
 import au.com.fc.dialogs.IDialog;
@@ -67,11 +66,16 @@ public class Main extends Activity {
             config = MdlConfig.load();
             if (config != null) {
                 btnUpdate = new Button(this);
-
+                btnUpdate.setText(getString(R.string.refresh_dates));
+                LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                ll.addView(btnUpdate, lp);
                 final String name = config.getName();
                 final String parkId = config.getParkId();
                 ioUtils = new IOUtils(name, parkId, calendar);
                 if (config.isOwner()) {
+
                     calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
                         @Override
                         public void onDateSelected(Date date) {
@@ -83,11 +87,17 @@ public class Main extends Activity {
                             ioUtils.sendDatesFree();
                         }
                     });
+                    btnUpdate.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            btnUpdate.setEnabled(false);
+                            doOwner();
+                            btnUpdate.setEnabled(true);
+                        }
+                    });
                     doOwner();
                 } else {
-                    LinearLayout ll = (LinearLayout) findViewById(R.id.layout);
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                    ll.addView(btnUpdate, lp);
+
                     calendar.setCellClickInterceptor(new CalendarPickerView.CellClickInterceptor() {
                         @Override
                         public boolean onCellClicked(Date date) {
@@ -121,9 +131,7 @@ public class Main extends Activity {
 
     private void doUser() {
         label.setText("User: " + ioUtils.getName());
-        btnUpdate.setText(getString(R.string.refresh_dates));
-        btnUpdate.setEnabled(false);
-        if (!ioUtils.loadUnreserved()) {
+        if (!ioUtils.loadAll()) {
             dialogs.showMessage(getString(R.string.try_again), new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
@@ -132,7 +140,6 @@ public class Main extends Activity {
             });
 
         }
-        btnUpdate.setEnabled(true);
         updateReservedDays();
     }
 
@@ -199,12 +206,12 @@ public class Main extends Activity {
                     }
                 }, getString(R.string.reset_config));
                 return true;
-            case R.id.refresh:
+            case R.id.help:
                 if (config != null) {
                     if (config.isOwner()) {
-                        doOwner();
+                        dialogs.showMessage(getString(R.string.help_owner));
                     } else {
-                        doUser();
+                        dialogs.showMessage(getString(R.string.help_user));
                     }
                 }
                 return true;
