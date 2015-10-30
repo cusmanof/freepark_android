@@ -202,7 +202,7 @@ public class IOUtils {
         List<Date> dates = mdlAll.getDates();
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
-                if (!mdlAll.getUsed().get(i).isEmpty() && mdlAll.getParkId().get(i).isEmpty()) {
+                if (!checkEmpty( mdlAll.getUsed(),i) && checkEmpty(mdlAll.getParkId(),i)) {
                     ret.add(dates.get(i));
                 }
             }
@@ -215,19 +215,20 @@ public class IOUtils {
         List<Date> dates = mdlDates.getDates();
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
-                if (mdlDates.getUsed().get(i).isEmpty())
+                if (checkEmpty(mdlDates.getUsed(), i))
                     ret.add(dates.get(i));
             }
         }
         return ret;
     }
 
+
     public Collection<Date> getUnFreeDates() {
         List<Date> ret = new LinkedList<>();
         List<Date> dates = mdlDates.getDates();
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
-                if (!mdlDates.getUsed().get(i).isEmpty())
+                if (!checkEmpty(mdlDates.getUsed(),i))
                     ret.add(dates.get(i));
             }
         }
@@ -238,7 +239,7 @@ public class IOUtils {
         List<Date> dates = mdlDates.getDates();
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
-                if (mdlDates.getDates().get(i).equals(date) && !mdlDates.getUsed().get(i).isEmpty())
+                if (mdlDates.getDates().get(i).equals(date) && !checkEmpty(mdlDates.getUsed(),i))
                     return mdlDates.getUsed().get(i);
             }
         }
@@ -252,7 +253,7 @@ public class IOUtils {
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
                 Date d = dates.get(i);
-                if (mdlAll.getUsed().get(i).isEmpty() && !cannotUse.contains(d))
+                if (checkEmpty(mdlAll.getUsed(),i) && !cannotUse.contains(d))
                     ret.add(d);
             }
         }
@@ -264,7 +265,7 @@ public class IOUtils {
         List<String> used = mdlAll.getUsed();
         if (used != null) {
             for (int i = 0; i < used.size(); i++) {
-                if (name.equals(mdlAll.getUsed().get(i)) && !mdlAll.getParkId().get(i).isEmpty()) {
+                if (name.equals(mdlAll.getUsed().get(i)) && !checkEmpty(mdlAll.getParkId(),i)) {
                     ret.add(mdlAll.getDates().get(i));
                 }
             }
@@ -277,7 +278,7 @@ public class IOUtils {
         if (dates != null) {
             for (int i = 0; i < dates.size(); i++) {
                 if (dates.get(i).equals(date)) {
-                    if (name.equals(mdlAll.getUsed().get(i)) &&  !mdlAll.getParkId().get(i).isEmpty()) {
+                    if (name.equals(mdlAll.getUsed().get(i)) &&  !checkEmpty(mdlAll.getParkId(),i)) {
                         return true;
                     }
                 }
@@ -304,6 +305,9 @@ public class IOUtils {
         return null;
     }
 
+    private boolean checkEmpty(List<String> str, int idx) {
+        return str == null || str.get(idx) == null ||  str.get(idx).isEmpty();
+    }
 
     public boolean canReserve(Date date) {
         return getUnreservedDates().contains(date);
